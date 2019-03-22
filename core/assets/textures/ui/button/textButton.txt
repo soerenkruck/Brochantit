@@ -1,0 +1,19 @@
+textButton.png
+size: 2, 1
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pressed
+  rotate: false
+  xy: 0, 0
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+unpressed
+  rotate: false
+  xy: 1, 0
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

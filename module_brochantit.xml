@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_brochantit" default="compile.module.brochantit">
+  <dirname property="module.brochantit.basedir" file="${ant.file.module_brochantit}"/>
+  
+  <property name="module.jdk.home.brochantit" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.brochantit" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.brochantit" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.brochantit" value="-encoding UTF-8 -source 6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="brochantit.output.dir" value="${module.brochantit.basedir}/out/production/Brochantit"/>
+  <property name="brochantit.testoutput.dir" value="${module.brochantit.basedir}/out/test/Brochantit"/>
+  
+  <path id="brochantit.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="brochantit.module.production.classpath">
+    <path refid="${module.jdk.classpath.brochantit}"/>
+  </path>
+  
+  <path id="brochantit.runtime.production.module.classpath">
+    <pathelement location="${brochantit.output.dir}"/>
+  </path>
+  
+  <path id="brochantit.module.classpath">
+    <path refid="${module.jdk.classpath.brochantit}"/>
+    <pathelement location="${brochantit.output.dir}"/>
+  </path>
+  
+  <path id="brochantit.runtime.module.classpath">
+    <pathelement location="${brochantit.testoutput.dir}"/>
+    <pathelement location="${brochantit.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.brochantit">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.brochantit">
+    <patternset refid="excluded.from.module.brochantit"/>
+  </patternset>
+  
+  
+  <target name="compile.module.brochantit" depends="compile.module.brochantit.production,compile.module.brochantit.tests" description="Compile module Brochantit"/>
+  
+  <target name="compile.module.brochantit.production" depends="register.custom.compilers" description="Compile module Brochantit; production classes"/>
+  
+  <target name="compile.module.brochantit.tests" depends="register.custom.compilers,compile.module.brochantit.production" description="compile module Brochantit; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.brochantit" description="cleanup module">
+    <delete dir="${brochantit.output.dir}"/>
+    <delete dir="${brochantit.testoutput.dir}"/>
+  </target>
+</project>
