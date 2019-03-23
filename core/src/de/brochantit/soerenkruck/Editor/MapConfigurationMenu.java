@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.brochantit.soerenkruck.Const.MapData;
+import de.brochantit.soerenkruck.TexturenIndex;
 
 public class MapConfigurationMenu implements Screen {
 
@@ -26,6 +27,7 @@ public class MapConfigurationMenu implements Screen {
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private TextButton.TextButtonStyle textButtonStyle;
+    TexturenIndex texturenIndex;
 
     String name;
 
@@ -45,8 +47,9 @@ public class MapConfigurationMenu implements Screen {
                 mapYSize = 1,
                 mapTime = 0;
 
-    public MapConfigurationMenu (String name) {
+    public MapConfigurationMenu (String name, TexturenIndex tx) {
         this.name = name;
+        this.texturenIndex = tx;
     }
 
     @Override
@@ -131,7 +134,7 @@ public class MapConfigurationMenu implements Screen {
         createButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MapEditor(mapXSize, mapYSize, mapTime, name));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MapEditor(mapXSize, mapYSize, mapTime, name, texturenIndex));
             }
         });
 

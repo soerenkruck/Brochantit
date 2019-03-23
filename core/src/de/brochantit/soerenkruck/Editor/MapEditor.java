@@ -44,13 +44,13 @@ public class MapEditor implements Screen {
     Stage stage;
     String name;
 
-    public MapEditor(int x, int y, int time, String name) {
+    public MapEditor(int x, int y, int time, String name, TexturenIndex tx) {
         this.name = name;
 
         mapData = new MapData(x, y, time);
         mapInformation = new ArrayList<TileInformation>();
 
-        texturenIndex = new TexturenIndex();
+        this.texturenIndex = tx;
 
         for (int ix = 0; ix < mapData.MAP_X; ix++) {
             for (int iy = 0; iy < mapData.MAP_Y; iy++) {

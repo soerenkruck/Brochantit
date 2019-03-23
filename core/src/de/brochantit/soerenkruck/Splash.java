@@ -1,9 +1,6 @@
 package de.brochantit.soerenkruck;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,7 +23,7 @@ public class Splash implements Screen {
     Color color;
 
     String name;
-    TexturenIndex texturen;
+    TexturenIndex texturenIndex;
 
     Splash (String name) {
         this.name = name;
@@ -42,12 +39,13 @@ public class Splash implements Screen {
         texture.setBounds(iconRec.x, iconRec.y, iconRec.width, iconRec.height);
         color = texture.getColor();
 
-        new Thread(new Runnable() { // TODO: Finish Lade-Thread für Texturen.
+        Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                load();
+                texturenIndex = new TexturenIndex();
+                texturenIndex.load();
             }
-        }).start();
+        });
 
         new Thread(new Runnable() {
             @Override
@@ -57,14 +55,9 @@ public class Splash implements Screen {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 finished = true;
             }
         }).start();
-    }
-
-    private void load() {
-        texturen = new TexturenIndex();
     }
 
     @Override
@@ -91,7 +84,7 @@ public class Splash implements Screen {
             color.a -= 0.018;
 
         if (color.a < 0.01)
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name, texturen));
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name, texturenIndex));
 
     }
 

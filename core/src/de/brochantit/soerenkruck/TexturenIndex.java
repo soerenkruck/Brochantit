@@ -29,6 +29,9 @@ public class TexturenIndex {
 
     public TexturenIndex() {
         textures = new ArrayList<Texture>();
+    }
+
+    public void load() {
         textures.add(new Texture("textures/ground/bricks.jpg"));
         textures.add(new Texture("textures/placeable/wall.png"));
         textures.add(new Texture("textures/placeable/gras.png"));

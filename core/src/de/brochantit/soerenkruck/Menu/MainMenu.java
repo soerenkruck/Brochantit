@@ -35,6 +35,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
     TextButton characterButton;
     TextButton editorButton;
     TextButton beendenButton;
+    TextButton einstellungenButton;
 
     TexturenIndex texturenIndex;
     Texture player;
@@ -112,6 +113,9 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
         characterButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(3*(ABS_16))-Gdx.graphics.getHeight()/13.5f-60, Gdx.graphics.getWidth()/5, 30);
         editorButton = new TextButton("Map Editor", textButtonLiteStyle);
         editorButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(4*(ABS_16))-Gdx.graphics.getHeight()/13.5f-90, Gdx.graphics.getWidth()/5, 30);
+        einstellungenButton = new TextButton("Einstellungen", textButtonLiteStyle);
+        einstellungenButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(5*(ABS_16))-Gdx.graphics.getHeight()/13.5f-120, Gdx.graphics.getWidth()/5, 30);
+
         beendenButton = new TextButton("Beenden", textButtonStyle);
         beendenButton.setBounds(Gdx.graphics.getWidth()-136, 8,128, 48);
 
@@ -128,7 +132,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MapConfigurationMenu(name));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MapConfigurationMenu(name, texturenIndex));
             }
         });
         characterButton.addListener(new ChangeListener() {
@@ -145,11 +149,19 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
                 System.exit(2);
             }
         });
+        einstellungenButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                music.stop();
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen(texturenIndex, name));
+            }
+        });
 
         stage.addActor(hostButton);
         stage.addActor(characterButton);
         stage.addActor(editorButton);
         stage.addActor(beendenButton);
+        stage.addActor(einstellungenButton);
     }
 
     @Override
