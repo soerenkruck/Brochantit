@@ -44,8 +44,9 @@ public class GameClass implements Screen {
     private BitmapFont font;
     private String txt = "";
 
-    public GameClass(String name, boolean isServer) {
+    public GameClass(String name, boolean isServer, TexturenIndex tx) {
         this.name = name;
+        this.texturenIndex = tx;
         try {
             this.ip = String.valueOf(Inet4Address.getLocalHost());
         } catch (UnknownHostException e) {
@@ -58,7 +59,6 @@ public class GameClass implements Screen {
     @Override
     public void show () {
         batch = new SpriteBatch();
-        texturenIndex = new TexturenIndex();
 
         FileHandle settingsFile = Gdx.files.local("config/settings.afd");
         String tmp = settingsFile.readString().replace("\\r?\\n", "");

@@ -125,7 +125,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
                 FileHandle cfgFile = Gdx.files.local("config/network.afd");
                 String cfg[] = cfgFile.readString().split(";");
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, false));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, false, texturenIndex));
             }
         });
         editorButton.addListener(new ChangeListener() {
