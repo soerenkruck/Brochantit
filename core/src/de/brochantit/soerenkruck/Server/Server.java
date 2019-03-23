@@ -6,7 +6,7 @@ import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import de.brochantit.soerenkruck.Player;
-import de.brochantit.soerenkruck.Texturen;
+import de.brochantit.soerenkruck.TexturenIndex;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Server {
 
     String txt = "";
     public ArrayList<Player> sessionPlayer;
-    Texturen texturen;
+    TexturenIndex texturenIndex;
 
     public int port;
 
@@ -26,8 +26,8 @@ public class Server {
     Socket socket;
     BufferedReader buffer;
 
-    public Server(int port, Texturen texturen) {
-        this.texturen = texturen;
+    public Server(int port, TexturenIndex texturenIndex) {
+        this.texturenIndex = texturenIndex;
         this.port = port;
         final int tmpPort = this.port;
 
@@ -59,7 +59,7 @@ public class Server {
         if (txt.startsWith("connect=")) {
             String t = txt.replace("connect=", "");
             String tmp[] = t.split(";");
-            sessionPlayer.add(new Player(0, 0, 0, tmp[0], texturen)); //TODO: PlayerSkins
+            sessionPlayer.add(new Player(0, 0, 0, tmp[0], texturenIndex)); //TODO: PlayerSkins
             sessionPlayer.get(sessionPlayer.size()-1).ip = tmp[1];
             System.err.println("new player");
         }

@@ -16,13 +16,13 @@ public class Player {
 
     public String ip = "0";
 
-    Texturen tx;
+    TexturenIndex tx;
 
-    public Player(int x, int y, int skin, String name, Texturen texturen) {
-        tx = texturen;
+    public Player(int x, int y, int skin, String name, TexturenIndex texturenIndex) {
+        tx = texturenIndex;
         this.name = name;
 
-        playerSkin = new PlayerSkin(skin, texturen);
+        playerSkin = new PlayerSkin(skin, texturenIndex);
 
         playerSprite = new Sprite(playerSkin.right);
         if (playerSkin.playerSkin == PlayerSkin.PLAYER_STANDARD) {

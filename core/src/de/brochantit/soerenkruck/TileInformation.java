@@ -14,18 +14,18 @@ public class TileInformation {
     public Sprite sprite;
     public Rectangle rec;
 
-    Texturen texturen;
+    TexturenIndex texturenIndex;
 
-    public TileInformation (int t, boolean isStatic, Texturen tx, int x, int y) {
+    public TileInformation (int t, boolean isStatic, TexturenIndex tx, int x, int y) {
         this.type = t;
         this.isStatic = isStatic;
-        this.texturen = tx;
+        this.texturenIndex = tx;
 
         if (type != 0) {
             if (type == GroundTypes.GRASS) {
-                sprite = new Sprite(texturen.texture(Texturen.GRASS));
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.GRASS));
             } else if (type == GroundTypes.WALL) {
-                sprite = new Sprite(texturen.texture(Texturen.WALL));
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.WALL));
             }
         } else {
             sprite = new Sprite(new Texture(Gdx.files.internal("textures/null.png")));
@@ -37,9 +37,9 @@ public class TileInformation {
     public void update() {
         if (type != 0) {
             if (type == GroundTypes.GRASS) {
-                sprite.setTexture(texturen.texture(Texturen.GRASS));
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.GRASS));
             } else if (type == GroundTypes.WALL) {
-                sprite.setTexture(texturen.texture(Texturen.WALL));
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.WALL));
             }
         } else {
             sprite.setTexture(new Texture(Gdx.files.internal("textures/null.png")));

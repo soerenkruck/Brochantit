@@ -23,10 +23,10 @@ public class Splash implements Screen {
 
     Sprite texture;
     Rectangle iconRec;
-    float visivility = 1f;
     Color color;
 
     String name;
+    TexturenIndex texturen;
 
     Splash (String name) {
         this.name = name;
@@ -42,6 +42,13 @@ public class Splash implements Screen {
         texture.setBounds(iconRec.x, iconRec.y, iconRec.width, iconRec.height);
         color = texture.getColor();
 
+        new Thread(new Runnable() { // TODO: Finish Lade-Thread für Texturen.
+            @Override
+            public void run() {
+                load();
+            }
+        }).start();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -54,6 +61,10 @@ public class Splash implements Screen {
                 finished = true;
             }
         }).start();
+    }
+
+    private void load() {
+        texturen = new TexturenIndex();
     }
 
     @Override
@@ -80,7 +91,7 @@ public class Splash implements Screen {
             color.a -= 0.018;
 
         if (color.a < 0.01)
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name));
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name, texturen));
 
     }
 

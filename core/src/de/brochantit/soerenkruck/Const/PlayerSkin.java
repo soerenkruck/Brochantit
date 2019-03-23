@@ -1,7 +1,7 @@
 package de.brochantit.soerenkruck.Const;
 
 import com.badlogic.gdx.graphics.Texture;
-import de.brochantit.soerenkruck.Texturen;
+import de.brochantit.soerenkruck.TexturenIndex;
 
 public class PlayerSkin {
 
@@ -16,24 +16,24 @@ public class PlayerSkin {
                     up,
                     down;
 
-    public PlayerSkin(int player, Texturen texturen) {
+    public PlayerSkin(int player, TexturenIndex texturenIndex) {
         this.playerSkin = player;
 
         if (player == PLAYER_STANDARD) {
-            left = texturen.texture(Texturen.PLAYER_STANDARD_LEFT);
-            right = texturen.texture(Texturen.PLAYER_STANDARD_RIGHT);
-            up = texturen.texture(Texturen.PLAYER_STANDARD_UP);
-            down = texturen.texture(Texturen.PLAYER_STANDARD_DOWN);
+            left = texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_LEFT);
+            right = texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_RIGHT);
+            up = texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_UP);
+            down = texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_DOWN);
         } else if (player == PLAYER_NINJEO) {
-            left = texturen.texture(Texturen.PLAYER_NINJEO_LEFT);
-            right = texturen.texture(Texturen.PLAYER_NINJEO_RIGHT);
-            up = texturen.texture(Texturen.PLAYER_NINJEO_UP);
-            down = texturen.texture(Texturen.PLAYER_NINJEO_DOWN);
+            left = texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_LEFT);
+            right = texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_RIGHT);
+            up = texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_UP);
+            down = texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_DOWN);
         } else if (player == PLAYER_GENJI) {
-            left = texturen.texture(Texturen.PLAYER_GENJI_LEFT);
-            right = texturen.texture(Texturen.PLAYER_GENJI_RIGHT);
-            up = texturen.texture(Texturen.PLAYER_GENJI_UP);
-            down = texturen.texture(Texturen.PLAYER_GENJI_DOWN);
+            left = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_LEFT);
+            right = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_RIGHT);
+            up = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_UP);
+            down = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_DOWN);
         }
     }
 

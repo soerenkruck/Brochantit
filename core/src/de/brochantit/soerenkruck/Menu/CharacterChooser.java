@@ -10,27 +10,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import de.brochantit.soerenkruck.Const.PlayerSkin;
-import de.brochantit.soerenkruck.Texturen;
+import de.brochantit.soerenkruck.TexturenIndex;
 
 public class CharacterChooser implements Screen {
 
     private int currentCharacter = 1;
     SpriteBatch batch;
     Stage stage;
-    Texturen texturen;
+    TexturenIndex texturenIndex;
 
     BitmapFont HeadFont;
     String name;
 
-    public CharacterChooser(Texturen tx, String name) {
-        this.texturen = tx;
+    public CharacterChooser(TexturenIndex tx, String name) {
+        this.texturenIndex = tx;
         this.name = name;
 
         FileHandle settingsFile = Gdx.files.local("config/settings.afd");
@@ -107,7 +104,7 @@ public class CharacterChooser implements Screen {
                     }
                 }).start();
 
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name, texturenIndex));
             }
         });
 
@@ -125,16 +122,16 @@ public class CharacterChooser implements Screen {
         batch.begin();
         HeadFont.draw(batch, "Character | Auswahl", 16, Gdx.graphics.getHeight()-18);
 
-        batch.draw(texturen.texture(Texturen.PLAYER_STANDARD_RIGHT), 24, Gdx.graphics.getHeight()-100, 32, 64);
-        batch.draw(texturen.texture(Texturen.PLAYER_NINJEO_RIGHT), 8, Gdx.graphics.getHeight()-176, 64, 64);
-        batch.draw(texturen.texture(Texturen.PLAYER_GENJI_RIGHT), 8, Gdx.graphics.getHeight()-252, 64, 64);
+        batch.draw(texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_RIGHT), 24, Gdx.graphics.getHeight()-100, 32, 64);
+        batch.draw(texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_RIGHT), 8, Gdx.graphics.getHeight()-176, 64, 64);
+        batch.draw(texturenIndex.texture(TexturenIndex.PLAYER_GENJI_RIGHT), 8, Gdx.graphics.getHeight()-252, 64, 64);
 
         if (currentCharacter == PlayerSkin.PLAYER_STANDARD) {
-            batch.draw(texturen.texture(Texturen.PLAYER_STANDARD_LEFT), Gdx.graphics.getWidth()/2+128, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/7*6)/2, Gdx.graphics.getHeight()/7*6/2, Gdx.graphics.getHeight()/7*6);
+            batch.draw(texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_LEFT), Gdx.graphics.getWidth()/2+128, (Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/7*6)/2, Gdx.graphics.getHeight()/7*6/2, Gdx.graphics.getHeight()/7*6);
         } else if (currentCharacter == PlayerSkin.PLAYER_NINJEO) {
-            batch.draw(texturen.texture(Texturen.PLAYER_NINJEO_LEFT), Gdx.graphics.getWidth()/2, (Gdx.graphics.getHeight()-(Gdx.graphics.getWidth()/2)/7*6)/2, (Gdx.graphics.getWidth()/2)/7*6, (Gdx.graphics.getWidth()/2)/7*6);
+            batch.draw(texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_LEFT), Gdx.graphics.getWidth()/2, (Gdx.graphics.getHeight()-(Gdx.graphics.getWidth()/2)/7*6)/2, (Gdx.graphics.getWidth()/2)/7*6, (Gdx.graphics.getWidth()/2)/7*6);
         } else if (currentCharacter == PlayerSkin.PLAYER_GENJI) {
-            batch.draw(texturen.texture(Texturen.PLAYER_GENJI_LEFT), Gdx.graphics.getWidth()/2, (Gdx.graphics.getHeight()-(Gdx.graphics.getWidth()/2)/7*6)/2, (Gdx.graphics.getWidth()/2)/7*6, (Gdx.graphics.getWidth()/2)/7*6);
+            batch.draw(texturenIndex.texture(TexturenIndex.PLAYER_GENJI_LEFT), Gdx.graphics.getWidth()/2, (Gdx.graphics.getHeight()-(Gdx.graphics.getWidth()/2)/7*6)/2, (Gdx.graphics.getWidth()/2)/7*6, (Gdx.graphics.getWidth()/2)/7*6);
         }
         batch.end();
 

@@ -36,6 +36,10 @@ public class MapConfigurationMenu implements Screen {
     private Button timeHigherButton;
     private Button timeLowerButton;
     private Button createButton;
+    private Button xFourHigherButton; //Todo: Buttons implementieren.
+    private Button xFourLowerButton;
+    private Button yFourHigherButton;
+    private Button yFourLowerButton;
 
     private int mapXSize = 1,
                 mapYSize = 1,
@@ -127,7 +131,7 @@ public class MapConfigurationMenu implements Screen {
         createButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new Editor(mapXSize, mapYSize, mapTime, name));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MapEditor(mapXSize, mapYSize, mapTime, name));
             }
         });
 
@@ -147,7 +151,7 @@ public class MapConfigurationMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        HeadFont.draw(batch, "Map | Konfigurationsmenü", 16, Gdx.graphics.getHeight()-18);
+        HeadFont.draw(batch, "Neue Map erstellen.", 16, Gdx.graphics.getHeight()-18);
 
         textFont.draw(batch, "X Größe ", 16, Gdx.graphics.getHeight()-52);
         textFont.draw(batch, "Y Größe ", 16, Gdx.graphics.getHeight()-76);

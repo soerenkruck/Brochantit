@@ -18,10 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.brochantit.soerenkruck.Const.PlayerSkin;
 import de.brochantit.soerenkruck.Editor.MapConfigurationMenu;
-import de.brochantit.soerenkruck.ServerGame;
-import de.brochantit.soerenkruck.Texturen;
+import de.brochantit.soerenkruck.GameClass;
+import de.brochantit.soerenkruck.TexturenIndex;
 
-public class MainMenu implements Screen {
+public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
 
     SpriteBatch batch;
     BitmapFont font;
@@ -36,7 +36,7 @@ public class MainMenu implements Screen {
     TextButton editorButton;
     TextButton beendenButton;
 
-    Texturen texturen;
+    TexturenIndex texturenIndex;
     Texture player;
     Sprite background;
 
@@ -47,16 +47,15 @@ public class MainMenu implements Screen {
     final float ABS_16 = Gdx.graphics.getHeight()/67.5f;
     private int currentCharacter = 1;
 
-    public MainMenu (String name) {
+    public MainMenu (String name, TexturenIndex texturenIndex) {
         this.name = name;
+        this.texturenIndex = texturenIndex;
     }
 
     @Override
     public void show() {
         batch = new SpriteBatch();
         font = new BitmapFont();
-
-        texturen = new Texturen();
 
         FileHandle settingsFile = Gdx.files.local("config/settings.afd");
         if (settingsFile.exists()) {
@@ -67,11 +66,11 @@ public class MainMenu implements Screen {
             currentCharacter = 0;
         }
         if (currentCharacter == PlayerSkin.PLAYER_STANDARD) {
-            player = texturen.texture(Texturen.PLAYER_STANDARD_RIGHT);
+            player = texturenIndex.texture(TexturenIndex.PLAYER_STANDARD_RIGHT);
         } else if (currentCharacter == PlayerSkin.PLAYER_NINJEO) {
-            player = texturen.texture(Texturen.PLAYER_NINJEO_RIGHT);
+            player = texturenIndex.texture(TexturenIndex.PLAYER_NINJEO_RIGHT);
         } else if (currentCharacter == PlayerSkin.PLAYER_GENJI) {
-            player = texturen.texture(Texturen.PLAYER_GENJI_RIGHT);
+            player = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_RIGHT);
         }
 
         background = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/tmp_bg.jpg")));
@@ -111,7 +110,7 @@ public class MainMenu implements Screen {
         hostButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(2*(ABS_16))-Gdx.graphics.getHeight()/13.5f-30, Gdx.graphics.getWidth()/5, 30);
         characterButton = new TextButton("Charakter", textButtonLiteStyle);
         characterButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(3*(ABS_16))-Gdx.graphics.getHeight()/13.5f-60, Gdx.graphics.getWidth()/5, 30);
-        editorButton = new TextButton("Editor", textButtonLiteStyle);
+        editorButton = new TextButton("Map Editor", textButtonLiteStyle);
         editorButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(4*(ABS_16))-Gdx.graphics.getHeight()/13.5f-90, Gdx.graphics.getWidth()/5, 30);
         beendenButton = new TextButton("Beenden", textButtonStyle);
         beendenButton.setBounds(Gdx.graphics.getWidth()-136, 8,128, 48);
@@ -122,7 +121,7 @@ public class MainMenu implements Screen {
                 FileHandle cfgFile = Gdx.files.local("config/network.afd");
                 String cfg[] = cfgFile.readString().split(";");
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new ServerGame(name, false));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, false));
             }
         });
         editorButton.addListener(new ChangeListener() {
@@ -136,7 +135,7 @@ public class MainMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new CharacterChooser(texturen, name));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new CharacterChooser(texturenIndex, name));
             }
         });
         beendenButton.addListener(new ChangeListener() {
@@ -165,7 +164,7 @@ public class MainMenu implements Screen {
         } else {
             batch.draw(player, Gdx.graphics.getWidth() / 240, Gdx.graphics.getHeight() - (ABS_16) - Gdx.graphics.getHeight() / 13.5f, Gdx.graphics.getHeight() / 13.5f, Gdx.graphics.getHeight() / 13.5f);
         }
-        font.draw(batch, "Version 0.3.1 [21.03.2019] alpha build", 16, 24);
+        font.draw(batch, "Version 0.3.1.1 [23.03.2019] alpha build", 16, 24);
         font.draw(batch, "Willkommen, " + name, Gdx.graphics.getWidth()/240 + Gdx.graphics.getHeight()/13.5f + ABS_16, Gdx.graphics.getHeight() - ABS_16 - 8);
         batch.end();
 
