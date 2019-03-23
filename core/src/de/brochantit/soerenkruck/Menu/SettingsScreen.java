@@ -2,6 +2,7 @@ package de.brochantit.soerenkruck.Menu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -27,7 +28,7 @@ public class SettingsScreen extends InteractingDefaultScreen {
         super.render(delta);
 
         defaultBatch.begin();
-        defaultFont.draw(defaultBatch, "Sich in Entwicklung befindend.", Gdx.graphics.getWidth()/2-100, Gdx.graphics.getHeight()/2);
+        defaultFont.draw(defaultBatch, "Sich in Entwicklung befindend.", Gdx.graphics.getWidth()/2-150, Gdx.graphics.getHeight()/9*5);
         defaultBatch.end();
     }
 }

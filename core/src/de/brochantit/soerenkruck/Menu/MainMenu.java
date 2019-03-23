@@ -74,7 +74,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
             player = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_RIGHT);
         }
 
-        background = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/tmp_bg.jpg")));
+        background = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/menu_bg.png")));
         background.setSize(1920, 1080);
         background.setOrigin(background.getWidth()/2, background.getHeight()/2);
         background.setPosition(0, 0);
@@ -176,7 +176,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
         } else {
             batch.draw(player, Gdx.graphics.getWidth() / 240, Gdx.graphics.getHeight() - (ABS_16) - Gdx.graphics.getHeight() / 13.5f, Gdx.graphics.getHeight() / 13.5f, Gdx.graphics.getHeight() / 13.5f);
         }
-        font.draw(batch, "Version 0.3.1.1 [23.03.2019] alpha build", 16, 24);
+        font.draw(batch, "Version 0.3.1.2 [23.03.2019] alpha build", 16, 24);
         font.draw(batch, "Willkommen, " + name, Gdx.graphics.getWidth()/240 + Gdx.graphics.getHeight()/13.5f + ABS_16, Gdx.graphics.getHeight() - ABS_16 - 8);
         batch.end();
 
