@@ -33,7 +33,7 @@ public class MapEditor implements Screen {
 
     ArrayList<TileInformation> mapInformation;
     private MapData mapData;
-    private int act = 0, max = 0;
+    private String speicherStatus = "Ungespeichert";
 
     private int posX = 0, posY = 0, place;
     private int CurrentType = GroundTypes.EMPTY;
@@ -72,8 +72,6 @@ public class MapEditor implements Screen {
 
         initUI();
 
-        max = mapInformation.size()+1;
-        act = 0;
     }
 
     private void initUI() {
@@ -101,9 +99,11 @@ public class MapEditor implements Screen {
         TextButton PlaceButton,
                     saveButton,
                     homeButton;
+
         final TextButton  nullCheckedButton,
                     grassCheckedButton,
                     wallCheckedButton,
+                    fenceButton,
                     staticCheckedButton;
 
         PlaceButton = new TextButton("Platzieren", ChangeButtonStyle);
@@ -116,8 +116,10 @@ public class MapEditor implements Screen {
         grassCheckedButton.setBounds(8, Gdx.graphics.getHeight()-88, 64, 20);
         wallCheckedButton = new TextButton("Wand", ChangeButtonStyle);
         wallCheckedButton.setBounds(8, Gdx.graphics.getHeight()-112, 64, 20);
+        fenceButton = new TextButton("Zaun", ChangeButtonStyle);
+        fenceButton.setBounds(8, Gdx.graphics.getHeight()-136, 64, 20);
         staticCheckedButton = new TextButton("statisch", checkedButtonStyle);
-        staticCheckedButton.setBounds(8, Gdx.graphics.getHeight()-142, 64, 20);
+        staticCheckedButton.setBounds(8, Gdx.graphics.getHeight()-166, 64, 20);
         homeButton = new TextButton("Hauptbildschirm", ChangeButtonStyle);
         homeButton.setBounds(Gdx.graphics.getWidth()-238, Gdx.graphics.getHeight()-32, 114, 24);
 
@@ -137,6 +139,12 @@ public class MapEditor implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 CurrentType = GroundTypes.WALL;
+            }
+        });
+        fenceButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                CurrentType = GroundTypes.FENCE;
             }
         });
         staticCheckedButton.addListener(new ChangeListener() {
@@ -170,6 +178,8 @@ public class MapEditor implements Screen {
         stage.addActor(nullCheckedButton);
         stage.addActor(grassCheckedButton);
         stage.addActor(wallCheckedButton);
+        stage.addActor(fenceButton);
+
         stage.addActor(staticCheckedButton);
         stage.addActor(saveButton);
         stage.addActor(homeButton);
@@ -177,7 +187,7 @@ public class MapEditor implements Screen {
 
     private void save() {
 
-        act = 0;
+        speicherStatus = "Map wird gespeichert.";
 
         new Thread(new Runnable() {
             @Override
@@ -191,15 +201,15 @@ public class MapEditor implements Screen {
 
                 mapDataFile.writeString("X=" + mapData.MAP_X + ";Y=" + mapData.MAP_Y + ";" + "TIME=" + mapData.TIME, true);
 
-                act++;
 
                 if (mapFile.exists())
                     mapFile.delete();
 
                 for (int i = 0; i < mapInformation.size(); i++) {
                     mapFile.writeString(mapInformation.get(i).type + "," + mapInformation.get(i).isStatic + ";", true);
-                    act++;
                 }
+
+                speicherStatus = "Gespeichert";
             }
         }).start();
     }
@@ -242,8 +252,8 @@ public class MapEditor implements Screen {
 
         normalText.draw(batch, "Aktuelle Position: X=" + posX + "; Y=" + posY + "; Array[i -> place]=" + place + "; CAM ZOOM=" + cam.zoom + ";", 0, -8);
         normalText.draw(batch, "Aktuell ausgewählter Typ: " + GroundTypes.GroundTypeString[CurrentType] + "; IstStatisch= " + Static, 0, - 24);
-        int percentageOfSaving = Math.round(act/max * 100);
-        normalText.draw(batch, "Speichern: " + percentageOfSaving + "%", 0, - 42);
+
+        normalText.draw(batch, "Speichern: " + speicherStatus, 0, - 42);
 
         batch.end();
 

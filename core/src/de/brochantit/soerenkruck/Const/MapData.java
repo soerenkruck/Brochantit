@@ -15,7 +15,7 @@ public class MapData {
     public static final int TIME_DAY = 2;
     public static final int TIME_SIZE = 3;
 
-    public static final String timeStrings[] = {"Mitternach", "Abenddämmerung", "Tag"};
+    public static final String timeStrings[] = {"Mitternacht", "Abenddämmerung", "Tag"};
 
     public MapData(int MAP_X, int MAP_Y, int TIME) {
         this.MAP_X = MAP_X;

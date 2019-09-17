@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.brochantit.soerenkruck.Const.PlayerSkin;
 import de.brochantit.soerenkruck.Editor.MapConfigurationMenu;
 import de.brochantit.soerenkruck.GameClass;
+import de.brochantit.soerenkruck.Metadaten;
 import de.brochantit.soerenkruck.TexturenIndex;
 
 public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
@@ -56,13 +57,13 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
     @Override
     public void show() {
         batch = new SpriteBatch();
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("fonts/share-regular.fnt"));
 
         FileHandle settingsFile = Gdx.files.local("config/settings.afd");
         if (settingsFile.exists()) {
             String tmp = settingsFile.readString().replace("\\r?\\n", "");
             String ready[] = tmp.split(";");
-            currentCharacter = Integer.valueOf(ready[0]);
+            currentCharacter = Integer.parseInt(ready[0]);
         } else {
             currentCharacter = 0;
         }
@@ -74,7 +75,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
             player = texturenIndex.texture(TexturenIndex.PLAYER_GENJI_RIGHT);
         }
 
-        background = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/menu_bg.png")));
+        background = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/menu_bg_2.png")));
         background.setSize(1920, 1080);
         background.setOrigin(background.getWidth()/2, background.getHeight()/2);
         background.setPosition(0, 0);
@@ -146,7 +147,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 music.stop();
-                System.exit(2);
+                System.exit(0);
             }
         });
         einstellungenButton.addListener(new ChangeListener() {
@@ -176,7 +177,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
         } else {
             batch.draw(player, Gdx.graphics.getWidth() / 240, Gdx.graphics.getHeight() - (ABS_16) - Gdx.graphics.getHeight() / 13.5f, Gdx.graphics.getHeight() / 13.5f, Gdx.graphics.getHeight() / 13.5f);
         }
-        font.draw(batch, "Version 0.3.1.2 [23.03.2019] alpha build", 16, 24);
+        font.draw(batch, Metadaten.VERSION, 16, 24);
         font.draw(batch, "Willkommen, " + name, Gdx.graphics.getWidth()/240 + Gdx.graphics.getHeight()/13.5f + ABS_16, Gdx.graphics.getHeight() - ABS_16 - 8);
         batch.end();
 

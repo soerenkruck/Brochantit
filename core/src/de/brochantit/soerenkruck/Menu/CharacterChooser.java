@@ -44,7 +44,7 @@ public class CharacterChooser implements Screen {
     public void show() {
         batch = new SpriteBatch();
 
-        HeadFont = new BitmapFont();
+        HeadFont = new BitmapFont(Gdx.files.internal("fonts/share-italic.fnt"));
         HeadFont.setColor(1, 0.8f, 0.5f, 1);
 
         initUI();
@@ -69,7 +69,7 @@ public class CharacterChooser implements Screen {
         ninjeoButton.setBounds(88, Gdx.graphics.getHeight()-160, 128, 32);
         TextButton genjiButton = new TextButton("Genji", textButtonStyle);
         genjiButton.setBounds(88, Gdx.graphics.getHeight() - 236, 128, 32);
-        TextButton saveButton = new TextButton("Speichern", textButtonStyle);
+        TextButton saveButton = new TextButton("Auswählen", textButtonStyle);
         saveButton.setBounds(Gdx.graphics.getWidth()-122, Gdx.graphics.getHeight()-32, 114, 24);
 
         standardButton.addListener(new ChangeListener() {

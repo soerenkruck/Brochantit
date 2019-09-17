@@ -9,6 +9,7 @@ public class TexturenIndex {
     public static final int GROUND_STANDARD = 0;
     public static final int WALL = 1;
     public static final int GRASS = 2;
+    public static final int FENCE = 18;
 
     public static final int EDITOR_SELECT = 5;
 
@@ -25,6 +26,10 @@ public class TexturenIndex {
     public static final int PLAYER_GENJI_UP = 14;
     public static final int PLAYER_GENJI_DOWN = 15;
 
+    public static final int GUN_STANDARD = 16;
+
+    public static final int BULLET_STANDARD = 17;
+
     private ArrayList<Texture> textures;
 
     public TexturenIndex() {
@@ -32,7 +37,7 @@ public class TexturenIndex {
     }
 
     public void load() {
-        textures.add(new Texture("textures/ground/bricks.jpg"));
+        textures.add(new Texture("textures/ground/gras.png"));
         textures.add(new Texture("textures/placeable/wall.png"));
         textures.add(new Texture("textures/placeable/gras.png"));
         textures.add(new Texture("textures/player/player3.png"));
@@ -48,6 +53,9 @@ public class TexturenIndex {
         textures.add(new Texture("textures/player/player2_invert.png"));
         textures.add(new Texture("textures/player/player3.png"));
         textures.add(new Texture("textures/player/player3.png"));
+        textures.add(new Texture("textures/GameObjects/gun.png"));
+        textures.add(new Texture("textures/GameObjects/bullet.png"));
+        textures.add(new Texture("textures/placeable/fence.png"));
     }
 
     public Texture texture (int e) {

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.brochantit.soerenkruck.Const.MapData;
+import de.brochantit.soerenkruck.Menu.MainMenu;
 import de.brochantit.soerenkruck.TexturenIndex;
 
 public class MapConfigurationMenu implements Screen {
@@ -38,10 +39,9 @@ public class MapConfigurationMenu implements Screen {
     private Button timeHigherButton;
     private Button timeLowerButton;
     private Button createButton;
-    private Button xFourHigherButton; //Todo: Buttons implementieren.
-    private Button xFourLowerButton;
-    private Button yFourHigherButton;
-    private Button yFourLowerButton;
+    private Button xEightHigherButton;
+    private Button yEightHigherButton;
+    private Button returnButton; //Todo: Button implementieren
 
     private int mapXSize = 1,
                 mapYSize = 1,
@@ -78,16 +78,22 @@ public class MapConfigurationMenu implements Screen {
         xLowerButton.setBounds(88, Gdx.graphics.getHeight()-68, 18, 18);
         xHigherButton = new TextButton("+", textButtonStyle);
         xHigherButton.setBounds(142, Gdx.graphics.getHeight()-68, 18, 18);
+        xEightHigherButton = new TextButton("+8", textButtonStyle);
+        xEightHigherButton.setBounds(168, Gdx.graphics.getHeight()-68, 18, 18);
         yLowerButton = new TextButton("-", textButtonStyle);
         yLowerButton.setBounds(88, Gdx.graphics.getHeight()-91, 18, 18);
         yHigherButton = new TextButton("+", textButtonStyle);
         yHigherButton.setBounds(142, Gdx.graphics.getHeight()-91, 18, 18);
+        yEightHigherButton = new TextButton("+8", textButtonStyle);
+        yEightHigherButton.setBounds(168, Gdx.graphics.getHeight()-91, 18, 18);
         timeLowerButton = new TextButton("-", textButtonStyle);
         timeLowerButton.setBounds(88, Gdx.graphics.getHeight()-114, 18, 18);
         timeHigherButton = new TextButton("+", textButtonStyle);
         timeHigherButton.setBounds(242, Gdx.graphics.getHeight()-114, 18, 18);
         createButton = new TextButton("Erstellen", textButtonStyle);
         createButton.setBounds(Gdx.graphics.getWidth()-116, 16, 100, 32);
+        returnButton = new TextButton("Hauptmenü", textButtonStyle);
+        returnButton.setBounds(Gdx.graphics.getWidth()-122, Gdx.graphics.getHeight()-36, 114, 28);
 
         xLowerButton.addListener(new ChangeListener() {
             @Override
@@ -103,6 +109,12 @@ public class MapConfigurationMenu implements Screen {
                 mapXSize++;
             }
         });
+        xEightHigherButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                mapXSize += 8;
+            }
+        });
         yLowerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -115,6 +127,12 @@ public class MapConfigurationMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mapYSize++;
+            }
+        });
+        yEightHigherButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                mapYSize += 8;
             }
         });
         timeLowerButton.addListener(new ChangeListener() {
@@ -137,14 +155,23 @@ public class MapConfigurationMenu implements Screen {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MapEditor(mapXSize, mapYSize, mapTime, name, texturenIndex));
             }
         });
+        returnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(name, texturenIndex));
+            }
+        });
 
         stage.addActor(xLowerButton);
         stage.addActor(xHigherButton);
+        stage.addActor(xEightHigherButton);
         stage.addActor(yLowerButton);
         stage.addActor(yHigherButton);
+        stage.addActor(yEightHigherButton);
         stage.addActor(timeLowerButton);
         stage.addActor(timeHigherButton);
         stage.addActor(createButton);
+        stage.addActor(returnButton);
 
     }
 

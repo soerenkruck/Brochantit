@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.net.Socket;
-import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -90,22 +89,6 @@ public class GameClass implements Screen {
 
         font = new BitmapFont();
 
-        if (isServer)
-            server = new Server(1339, texturenIndex);
-
-        player = new Player(0, 0, Integer.valueOf(tmpLinesofSt[0]), this.name, texturenIndex);
-
-        SocketHints socketHints = new SocketHints();
-        socketHints.connectTimeout = 2000;
-
-        //socket = Gdx.net.newClientSocket(Net.Protocol.TCP, this.ip, 1338, socketHints);
-
-        //try {
-        //    socket.getOutputStream().write(("connect="+name+";"+this.ip+"\n").getBytes());
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-
         initUI();
     }
 
@@ -155,7 +138,8 @@ public class GameClass implements Screen {
 
         InputHandling();
         cam.update();
-        player.update(); //TODO:
+        player.update();
+        player.updateGun(Gdx.input.getX(), Gdx.input.getY());
 
         batch.begin();
 
@@ -172,6 +156,7 @@ public class GameClass implements Screen {
             }
         }
 
+        player.gunSprite.draw(batch);
         player.playerSprite.draw(batch);
 
         font.draw(batch, txt, 0, 0);
@@ -250,16 +235,20 @@ public class GameClass implements Screen {
             }
         }
 
+        // TODO: definieren der Alignments
+
+        //  Kampf-Input
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+
+        }
+
         if (player.playerRec.getY() > cam.position.y + 40) {
             cam.translate(0, 4);
-        }
-        if (player.playerRec.getX() < cam.position.x - (40 + MapData.MAP_TILE_SIZE)) {
+        } else if (player.playerRec.getX() < cam.position.x - (40 + MapData.MAP_TILE_SIZE)) {
             cam.translate(-4, 0);
-        }
-        if (player.playerRec.getY() < cam.position.y - (40 + MapData.MAP_TILE_SIZE)) {
+        } else if (player.playerRec.getY() < cam.position.y - (40 + MapData.MAP_TILE_SIZE)) {
             cam.translate(0, -4);
-        }
-        if (player.playerRec.getX() > cam.position.x + 40) {
+        } else if (player.playerRec.getX() > cam.position.x + 40) {
             cam.translate(4, 0);
         }
     }

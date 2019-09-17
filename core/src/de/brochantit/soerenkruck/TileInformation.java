@@ -26,6 +26,8 @@ public class TileInformation {
                 sprite = new Sprite(texturenIndex.texture(TexturenIndex.GRASS));
             } else if (type == GroundTypes.WALL) {
                 sprite = new Sprite(texturenIndex.texture(TexturenIndex.WALL));
+            } else if (type == GroundTypes.FENCE) {
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.FENCE));
             }
         } else {
             sprite = new Sprite(new Texture(Gdx.files.internal("textures/null.png")));
@@ -40,6 +42,8 @@ public class TileInformation {
                 sprite.setTexture(texturenIndex.texture(TexturenIndex.GRASS));
             } else if (type == GroundTypes.WALL) {
                 sprite.setTexture(texturenIndex.texture(TexturenIndex.WALL));
+            } else if (type == GroundTypes.FENCE) {
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.FENCE));
             }
         } else {
             sprite.setTexture(new Texture(Gdx.files.internal("textures/null.png")));
