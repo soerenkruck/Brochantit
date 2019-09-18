@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.brochantit.soerenkruck.Const.PlayerSkin;
 import de.brochantit.soerenkruck.Editor.MapConfigurationMenu;
-import de.brochantit.soerenkruck.GameClass;
+import de.brochantit.soerenkruck.Game.GameClass;
 import de.brochantit.soerenkruck.Metadaten;
 import de.brochantit.soerenkruck.TexturenIndex;
 
@@ -154,7 +154,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen(texturenIndex, name));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new JoinScreen(texturenIndex, name));
             }
         });
 

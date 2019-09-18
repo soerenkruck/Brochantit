@@ -34,9 +34,9 @@ public class InteractingDefaultScreen implements Screen {
     TextButton.TextButtonStyle defaultLightTextButtonStyle;
     BitmapFont defaultLightButtonFont;
 
-    InteractingDefaultScreen (TexturenIndex tx, String defaultName) {
+    InteractingDefaultScreen(TexturenIndex tx, String name) {
         this.defaultTexturenIndex = tx;
-        this.defaultName = defaultName;
+        this.defaultName = name;
 
         initActingElements();
     }

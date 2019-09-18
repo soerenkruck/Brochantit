@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		System.out.println("ARGS: " + arg);
+		//System.out.println("ARGS: " + arg);
 
 		String name;
 

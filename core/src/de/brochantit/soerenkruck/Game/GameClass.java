@@ -1,4 +1,4 @@
-package de.brochantit.soerenkruck;
+package de.brochantit.soerenkruck.Game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,13 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.brochantit.soerenkruck.Const.MapData;
 import de.brochantit.soerenkruck.Menu.MainMenu;
+import de.brochantit.soerenkruck.Player;
 import de.brochantit.soerenkruck.Server.Server;
+import de.brochantit.soerenkruck.TexturenIndex;
+import de.brochantit.soerenkruck.TileInformation;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-public class GameClass implements Screen {
+public class GameClass implements Screen { // TODO: Server Implementieren.
 
     private String name, ip;
     private boolean isServer;
