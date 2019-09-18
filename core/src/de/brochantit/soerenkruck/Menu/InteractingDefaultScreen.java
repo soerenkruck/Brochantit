@@ -43,7 +43,7 @@ public class InteractingDefaultScreen implements Screen {
 
     @Override
     public void show() {
-        defaultBackground = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/menu_bg.png")));
+        defaultBackground = new Sprite(new Texture(Gdx.files.internal("textures/backgrounds/menu_bg_2.png")));
         defaultBackground.setSize(1920, 1080);
         defaultBackground.setOrigin(defaultBackground.getWidth()/2, defaultBackground.getHeight()/2);
         defaultBackground.setPosition(0, 0);
