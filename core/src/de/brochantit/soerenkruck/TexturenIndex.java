@@ -10,6 +10,10 @@ public class TexturenIndex {
     public static final int WALL = 1;
     public static final int GRASS = 2;
     public static final int FENCE = 18;
+    public static final int STONE_PATTERN = 19;
+    public static final int STONE_MESH = 20;
+    public static final int WOOD_PLANK_A = 21;
+    public static final int BOX_MODERN = 22;
 
     public static final int EDITOR_SELECT = 5;
 
@@ -25,6 +29,8 @@ public class TexturenIndex {
     public static final int PLAYER_GENJI_RIGHT = 13;
     public static final int PLAYER_GENJI_UP = 14;
     public static final int PLAYER_GENJI_DOWN = 15;
+    public static final int PLAYER_FUWE_LEFT = 23;
+    public static final int PLAYER_FUWE_RIGHT = 24;
 
     public static final int GUN_STANDARD = 16;
 
@@ -37,7 +43,7 @@ public class TexturenIndex {
     }
 
     public void load() {
-        textures.add(new Texture("textures/ground/gras.png"));
+        textures.add(new Texture("textures/ground/not even close to grass.png"));
         textures.add(new Texture("textures/placeable/wall.png"));
         textures.add(new Texture("textures/placeable/gras.png"));
         textures.add(new Texture("textures/player/player3.png"));
@@ -56,6 +62,10 @@ public class TexturenIndex {
         textures.add(new Texture("textures/GameObjects/gun.png"));
         textures.add(new Texture("textures/GameObjects/bullet.png"));
         textures.add(new Texture("textures/placeable/fence.png"));
+        textures.add(new Texture("textures/placeable/stone_mesh.png"));
+        textures.add(new Texture("textures/placeable/stone_patterns.png"));
+        textures.add(new Texture("textures/placeable/wood_planks_a.png"));
+        textures.add(new Texture("textures/placeable/box.png"));
     }
 
     public Texture texture (int e) {

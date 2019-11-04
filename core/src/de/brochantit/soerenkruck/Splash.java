@@ -25,6 +25,8 @@ public class Splash implements Screen {
     String name;
     TexturenIndex texturenIndex;
 
+    BitmapFont bitmapFont;
+
     Splash (String name) {
         this.name = name;
     }
@@ -58,6 +60,9 @@ public class Splash implements Screen {
                 finished = true;
             }
         }).start();
+
+        bitmapFont = new BitmapFont(Gdx.files.internal("fonts/share-italic.fnt"));
+        bitmapFont.setColor(Color.BLACK);
     }
 
     @Override
@@ -75,6 +80,7 @@ public class Splash implements Screen {
         batch.enableBlending();
         batch.begin();
         texture.draw(batch);
+        bitmapFont.draw(batch, "LEER zum Überspringen...", 8, Gdx.graphics.getHeight()-16);
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))

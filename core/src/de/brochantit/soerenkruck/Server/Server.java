@@ -5,13 +5,20 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 import de.brochantit.soerenkruck.Player;
 import de.brochantit.soerenkruck.TexturenIndex;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 
 public class Server {
 
@@ -21,32 +28,34 @@ public class Server {
 
     public int port;
 
-    ServerSocketHints ssh;
-    ServerSocket serverSocket;
-    Socket socket;
-    BufferedReader buffer;
-
-    public Server(int port, TexturenIndex texturenIndex) {
-        this.texturenIndex = texturenIndex;
+    public Server(int port) {
         this.port = port;
-        final int tmpPort = this.port;
+    }
 
-        sessionPlayer = new ArrayList<Player>();
-
-        ssh = new ServerSocketHints();
-        ssh.acceptTimeout = 0;
-        serverSocket = Gdx.net.newServerSocket(Net.Protocol.TCP, tmpPort, ssh);
-        socket = serverSocket.accept(null);
-        buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    public void start(final int port) {
+        this.port = port;
 
         new Thread(new Runnable() {
+            int tmpPort = port;
             @Override
             public void run() {
+                ServerSocketHints serverSocketHints = new ServerSocketHints();
+                serverSocketHints.acceptTimeout = 0;
+
+                ServerSocket serverSocket = Gdx.net.newServerSocket(Net.Protocol.TCP, tmpPort, serverSocketHints);
+
+                System.out.println("Server gestartet...; auf Port: " + tmpPort);
+
                 while (true) {
+                    Socket socket = serverSocket.accept(null);
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
                     try {
-                        txt = buffer.readLine();
-                        System.out.println(txt);
-                        interpretor(txt);
+                        String t = bufferedReader.readLine();
+                        System.out.println(t);
+                        if (t.startsWith("ServerTestNachricht")) {
+                            System.err.println("Server wurde erfolgreich gestartet.");
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -55,23 +64,34 @@ public class Server {
         }).start();
     }
 
-    private void interpretor(String txt) {
-        if (txt.startsWith("connect=")) {
-            String t = txt.replace("connect=", "");
-            String tmp[] = t.split(";");
-            sessionPlayer.add(new Player(0, 0, 0, tmp[0], texturenIndex)); //TODO: PlayerSkins
-            sessionPlayer.get(sessionPlayer.size()-1).ip = tmp[1];
-            System.err.println("new player");
-        }
-        if (txt.startsWith("COORD=")) {
-            String tmpS = txt.replace("COORD=", "").replace("\n", "");
-            String lines[] = tmpS.split(";");
-            for (int i = 0; i <= sessionPlayer.size()-1; i++) {
-                if (lines[2].equals(sessionPlayer.get(i).name)) {
-                    sessionPlayer.get(i).set(Math.round(Float.valueOf(lines[0])), Math.round(Float.valueOf(lines[1])));
-                    break;
+    public void test() {
+        SocketHints socketHints = new SocketHints();
+        socketHints.connectTimeout = 1000;
+
+        String ip = null;
+
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            for (NetworkInterface I : Collections.list(interfaces)) {
+                for (InetAddress addr : Collections.list(I.getInetAddresses())) {
+                    if (addr instanceof Inet4Address) {
+                        ip = addr.getHostAddress();
+                    }
                 }
             }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println(ip);
+
+        Socket socket = Gdx.net.newClientSocket(Net.Protocol.TCP, ip, port, socketHints);
+        String testString = "ServerTestNachricht; an IP=" + ip + " auf Port " + port + "\n";
+
+        try {
+            socket.getOutputStream().write(testString.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

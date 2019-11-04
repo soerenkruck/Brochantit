@@ -104,6 +104,10 @@ public class MapEditor implements Screen {
                     grassCheckedButton,
                     wallCheckedButton,
                     fenceButton,
+                    stonePatternButton,
+                    stoneMeshButton,
+                    woodPlankAButton,
+                    boxModernButton,
                     staticCheckedButton;
 
         PlaceButton = new TextButton("Platzieren", ChangeButtonStyle);
@@ -111,15 +115,23 @@ public class MapEditor implements Screen {
         saveButton = new TextButton("Speichern", ChangeButtonStyle);
         saveButton.setBounds(Gdx.graphics.getWidth()-116, Gdx.graphics.getHeight()-32, 108, 24);
         nullCheckedButton = new TextButton("null", ChangeButtonStyle);
-        nullCheckedButton.setBounds(8, Gdx.graphics.getHeight()-64, 64, 20);
+        nullCheckedButton.setBounds(8, Gdx.graphics.getHeight()-64, 96, 20);
         grassCheckedButton = new TextButton("Gras", ChangeButtonStyle);
-        grassCheckedButton.setBounds(8, Gdx.graphics.getHeight()-88, 64, 20);
+        grassCheckedButton.setBounds(8, Gdx.graphics.getHeight()-88, 96, 20);
         wallCheckedButton = new TextButton("Wand", ChangeButtonStyle);
-        wallCheckedButton.setBounds(8, Gdx.graphics.getHeight()-112, 64, 20);
+        wallCheckedButton.setBounds(8, Gdx.graphics.getHeight()-112, 96, 20);
         fenceButton = new TextButton("Zaun", ChangeButtonStyle);
-        fenceButton.setBounds(8, Gdx.graphics.getHeight()-136, 64, 20);
+        fenceButton.setBounds(8, Gdx.graphics.getHeight()-136, 96, 20);
+        stonePatternButton = new TextButton("Steinweg Platt", ChangeButtonStyle);
+        stonePatternButton.setBounds(8, Gdx.graphics.getHeight()-160, 96, 20);
+        stoneMeshButton = new TextButton("Stein verziert", ChangeButtonStyle);
+        stoneMeshButton.setBounds(8, Gdx.graphics.getHeight()-184, 96, 20);
+        woodPlankAButton = new TextButton("Holzweg", ChangeButtonStyle);
+        woodPlankAButton.setBounds(8, Gdx.graphics.getHeight()-208, 96, 20);
+        boxModernButton = new TextButton("Kiste Modern", ChangeButtonStyle);
+        boxModernButton.setBounds(8, Gdx.graphics.getHeight()-232, 96, 20);
         staticCheckedButton = new TextButton("statisch", checkedButtonStyle);
-        staticCheckedButton.setBounds(8, Gdx.graphics.getHeight()-166, 64, 20);
+        staticCheckedButton.setBounds(112, Gdx.graphics.getHeight()-64, 64, 20);
         homeButton = new TextButton("Hauptbildschirm", ChangeButtonStyle);
         homeButton.setBounds(Gdx.graphics.getWidth()-238, Gdx.graphics.getHeight()-32, 114, 24);
 
@@ -145,6 +157,30 @@ public class MapEditor implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 CurrentType = GroundTypes.FENCE;
+            }
+        });
+        stonePatternButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                CurrentType = GroundTypes.STONE_PATTERN;
+            }
+        });
+        stoneMeshButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                CurrentType = GroundTypes.STONE_MESH;
+            }
+        });
+        woodPlankAButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                CurrentType = GroundTypes.WOOD_PLANK_A;
+            }
+        });
+        boxModernButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                CurrentType = GroundTypes.BOX_MODERN;
             }
         });
         staticCheckedButton.addListener(new ChangeListener() {
@@ -179,6 +215,10 @@ public class MapEditor implements Screen {
         stage.addActor(grassCheckedButton);
         stage.addActor(wallCheckedButton);
         stage.addActor(fenceButton);
+        stage.addActor(stonePatternButton);
+        stage.addActor(stoneMeshButton);
+        stage.addActor(woodPlankAButton);
+        stage.addActor(boxModernButton);
 
         stage.addActor(staticCheckedButton);
         stage.addActor(saveButton);
@@ -261,13 +301,13 @@ public class MapEditor implements Screen {
     }
 
     private void inputHandling() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W))
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
             cam.translate(0, CAM_SPEED);
-        if (Gdx.input.isKeyPressed(Input.Keys.A))
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
             cam.translate(-CAM_SPEED, 0);
-        if (Gdx.input.isKeyPressed(Input.Keys.S))
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
             cam.translate(0, -CAM_SPEED);
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
             cam.translate(CAM_SPEED, 0);
         if (Gdx.input.isKeyPressed(Input.Keys.Y)) {
             if (cam.zoom > 0.08)
@@ -281,8 +321,14 @@ public class MapEditor implements Screen {
         }
         cam.update();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            mapInformation.get(place).type = CurrentType;
+            mapInformation.get(place).isStatic = Static;
+            mapInformation.get(place).update();
+        }
+
         if (go) {
-            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 if (posY < mapData.MAP_Y - 1) {
                     posY++;
                     go = false;
@@ -301,7 +347,7 @@ public class MapEditor implements Screen {
             }
         }
         if (go) {
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 if (posX > 0) {
                     posX--;
                     go = false;
@@ -320,7 +366,7 @@ public class MapEditor implements Screen {
             }
         }
         if (go) {
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 if (posY > 0) {
                     posY--;
                     go = false;
@@ -339,7 +385,7 @@ public class MapEditor implements Screen {
             }
         }
         if (go) {
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 if (posX < mapData.MAP_X - 1) {
                     posX++;
                     go = false;

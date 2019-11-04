@@ -38,7 +38,7 @@ public class Player {
         playerSprite.setBounds(playerRec.getX(), playerRec.getY(), playerRec.width, playerRec.height);
 
         gunSprite = new Sprite(texturenIndex.texture(TexturenIndex.GUN_STANDARD));
-        gunSprite.setBounds(playerRec.x+playerRec.width/2, playerRec.y+playerRec.height/3, 16, 8);
+        gunSprite.setBounds(playerRec.x+playerRec.width/2, playerRec.y+playerRec.height/3, 24, 12);
         gunSprite.setOrigin(0, 4);
     }
 

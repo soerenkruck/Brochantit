@@ -28,6 +28,14 @@ public class TileInformation {
                 sprite = new Sprite(texturenIndex.texture(TexturenIndex.WALL));
             } else if (type == GroundTypes.FENCE) {
                 sprite = new Sprite(texturenIndex.texture(TexturenIndex.FENCE));
+            } else if (type == GroundTypes.STONE_PATTERN) {
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.STONE_PATTERN));
+            } else if (type == GroundTypes.STONE_MESH) {
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.STONE_MESH));
+            } else if (type == GroundTypes.WOOD_PLANK_A) {
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.WOOD_PLANK_A));
+            } else if (type == GroundTypes.BOX_MODERN) {
+                sprite = new Sprite(texturenIndex.texture(TexturenIndex.BOX_MODERN));
             }
         } else {
             sprite = new Sprite(new Texture(Gdx.files.internal("textures/null.png")));
@@ -44,6 +52,14 @@ public class TileInformation {
                 sprite.setTexture(texturenIndex.texture(TexturenIndex.WALL));
             } else if (type == GroundTypes.FENCE) {
                 sprite.setTexture(texturenIndex.texture(TexturenIndex.FENCE));
+            } else if (type == GroundTypes.STONE_PATTERN) {
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.STONE_PATTERN));
+            } else if (type == GroundTypes.STONE_MESH) {
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.STONE_MESH));
+            } else if (type == GroundTypes.WOOD_PLANK_A) {
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.WOOD_PLANK_A));
+            } else if (type == GroundTypes.BOX_MODERN) {
+                sprite.setTexture(texturenIndex.texture(TexturenIndex.BOX_MODERN));
             }
         } else {
             sprite.setTexture(new Texture(Gdx.files.internal("textures/null.png")));

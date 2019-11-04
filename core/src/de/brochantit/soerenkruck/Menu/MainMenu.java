@@ -20,6 +20,7 @@ import de.brochantit.soerenkruck.Const.PlayerSkin;
 import de.brochantit.soerenkruck.Editor.MapConfigurationMenu;
 import de.brochantit.soerenkruck.Game.GameClass;
 import de.brochantit.soerenkruck.Metadaten;
+import de.brochantit.soerenkruck.Server.Server;
 import de.brochantit.soerenkruck.TexturenIndex;
 
 public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
@@ -32,11 +33,12 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
     BitmapFont buttonFont;
     Skin skin, skinLite;
     TextureAtlas buttonAtlas, buttonLiteAtlas;
-    TextButton hostButton;
+    TextButton playButton;
     TextButton characterButton;
     TextButton editorButton;
     TextButton beendenButton;
     TextButton einstellungenButton;
+    TextButton serverButton;
 
     TexturenIndex texturenIndex;
     Texture player;
@@ -83,6 +85,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
         initMenu();
 
         music = Gdx.audio.newMusic(Gdx.files.internal("music/titelmusik.mp3"));
+        music.setVolume(0.15f);
         music.setLooping(true);
         music.play();
     }
@@ -108,25 +111,27 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
         textButtonLiteStyle.up = skinLite.getDrawable("pressed");
         textButtonLiteStyle.down = skinLite.getDrawable("unpressed");
 
-        hostButton = new TextButton("Spielen", textButtonLiteStyle);
-        hostButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(2*(ABS_16))-Gdx.graphics.getHeight()/13.5f-30, Gdx.graphics.getWidth()/5, 30);
+        playButton = new TextButton("Spielen", textButtonLiteStyle);
+        playButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(2*(ABS_16))-Gdx.graphics.getHeight()/13.5f-30, Gdx.graphics.getWidth()/5, 30);
         characterButton = new TextButton("Charakter", textButtonLiteStyle);
         characterButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(3*(ABS_16))-Gdx.graphics.getHeight()/13.5f-60, Gdx.graphics.getWidth()/5, 30);
         editorButton = new TextButton("Map Editor", textButtonLiteStyle);
         editorButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(4*(ABS_16))-Gdx.graphics.getHeight()/13.5f-90, Gdx.graphics.getWidth()/5, 30);
         einstellungenButton = new TextButton("Einstellungen", textButtonLiteStyle);
         einstellungenButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(5*(ABS_16))-Gdx.graphics.getHeight()/13.5f-120, Gdx.graphics.getWidth()/5, 30);
+        serverButton = new TextButton("Server", textButtonLiteStyle);
+        serverButton.setBounds(Gdx.graphics.getHeight()/135, Gdx.graphics.getHeight()-(6*(ABS_16))-Gdx.graphics.getHeight()/13.5f-150, Gdx.graphics.getWidth()/5, 30);
 
         beendenButton = new TextButton("Beenden", textButtonStyle);
         beendenButton.setBounds(Gdx.graphics.getWidth()-136, 8,128, 48);
 
-        hostButton.addListener(new ChangeListener() {
+        playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 FileHandle cfgFile = Gdx.files.local("config/network.afd");
                 String cfg[] = cfgFile.readString().split(";");
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, false, texturenIndex));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, "127.0.0.1", texturenIndex));
             }
         });
         editorButton.addListener(new ChangeListener() {
@@ -154,15 +159,35 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 music.stop();
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen(texturenIndex, name));
+            }
+        });
+        serverButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new JoinScreen(texturenIndex, name));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Server server = new Server(1464);
+                        server.start(1464);
+                        try {
+                            Thread.sleep(2500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        server.test();
+                    }
+                }).start();
             }
         });
 
-        stage.addActor(hostButton);
+        stage.addActor(playButton);
         stage.addActor(characterButton);
         stage.addActor(editorButton);
         stage.addActor(beendenButton);
         stage.addActor(einstellungenButton);
+        stage.addActor(serverButton);
     }
 
     @Override

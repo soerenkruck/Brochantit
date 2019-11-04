@@ -2,6 +2,7 @@ package de.brochantit.soerenkruck.Game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -27,8 +28,6 @@ import java.util.ArrayList;
 public class GameClass implements Screen { // TODO: Server Implementieren.
 
     private String name, ip;
-    private boolean isServer;
-    private Socket socket;
 
     private SpriteBatch batch;
     private Stage stage;
@@ -46,16 +45,10 @@ public class GameClass implements Screen { // TODO: Server Implementieren.
     private BitmapFont font;
     private String txt = "";
 
-    public GameClass(String name, boolean isServer, TexturenIndex tx) {
+    public GameClass(String name, String connectIP, TexturenIndex tx) {
         this.name = name;
         this.texturenIndex = tx;
-        try {
-            this.ip = String.valueOf(Inet4Address.getLocalHost());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            System.err.println("HostExcpetion");
-        }
-        this.isServer = isServer;
+        this.ip = connectIP;
     }
 
     @Override
@@ -125,6 +118,8 @@ public class GameClass implements Screen { // TODO: Server Implementieren.
         });
 
         stage.addActor(exitButton);
+
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Crosshair);
     }
 
     @Override
@@ -163,14 +158,6 @@ public class GameClass implements Screen { // TODO: Server Implementieren.
         player.playerSprite.draw(batch);
 
         font.draw(batch, txt, 0, 0);
-
-        if (isServer) {
-            try {
-                font.draw(batch, name + "@" + String.valueOf(Inet4Address.getLocalHost()), -0, -50);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-        }
 
         batch.end();
 
@@ -253,6 +240,11 @@ public class GameClass implements Screen { // TODO: Server Implementieren.
             cam.translate(0, -4);
         } else if (player.playerRec.getX() > cam.position.x + 40) {
             cam.translate(4, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.F11)) {
+            if (Gdx.graphics.isFullscreen()) {
+            }
         }
     }
 
