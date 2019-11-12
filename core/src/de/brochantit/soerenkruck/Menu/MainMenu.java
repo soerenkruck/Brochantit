@@ -131,7 +131,7 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
                 FileHandle cfgFile = Gdx.files.local("config/network.afd");
                 String cfg[] = cfgFile.readString().split(";");
                 music.stop();
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, "127.0.0.1", texturenIndex));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new JoinScreen(texturenIndex, name)); // TODO: JoinScreen
             }
         });
         editorButton.addListener(new ChangeListener() {
@@ -165,20 +165,9 @@ public class MainMenu implements Screen { // TODO: Schriftart hinzufügen.
         serverButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new JoinScreen(texturenIndex, name));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Server server = new Server(1464);
-                        server.start(1464);
-                        try {
-                            Thread.sleep(2500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        server.test();
-                    }
-                }).start();
+                music.stop();
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new ServerInterface(texturenIndex, name));
+
             }
         });
 

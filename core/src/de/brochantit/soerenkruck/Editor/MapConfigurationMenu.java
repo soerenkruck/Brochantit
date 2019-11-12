@@ -41,7 +41,7 @@ public class MapConfigurationMenu implements Screen {
     private Button createButton;
     private Button xEightHigherButton;
     private Button yEightHigherButton;
-    private Button returnButton; //Todo: Button implementieren
+    private Button returnButton;
 
     private int mapXSize = 1,
                 mapYSize = 1,

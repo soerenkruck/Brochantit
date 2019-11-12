@@ -4,16 +4,20 @@ import com.badlogic.gdx.Input;
 
 public class TextInputDialog implements Input.TextInputListener {
 
-    private String value = "0";
+    private String value = "null";
+    private String defaultValue = "null";
 
     @Override
     public void input(String text) {
         this.value = text;
     }
 
+    public void setDeafultCanceledValue(final String value) {
+        this.defaultValue = value;
+    }
     @Override
     public void canceled() {
-        this.value = "127.0.0.1";
+        this.value = defaultValue;
     }
 
     public String getValue() {

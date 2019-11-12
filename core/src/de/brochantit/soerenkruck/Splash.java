@@ -62,12 +62,12 @@ public class Splash implements Screen {
         }).start();
 
         bitmapFont = new BitmapFont(Gdx.files.internal("fonts/share-italic.fnt"));
-        bitmapFont.setColor(Color.BLACK);
+        bitmapFont.setColor(Color.WHITE);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.97f, 0.98f, 1f, 1);
+        Gdx.gl.glClearColor(0.18f, .18f, .2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         iconRec.width *= 1.001;

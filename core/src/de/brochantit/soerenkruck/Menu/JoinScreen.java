@@ -2,10 +2,10 @@ package de.brochantit.soerenkruck.Menu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import de.brochantit.soerenkruck.Game.GameClass;
 import de.brochantit.soerenkruck.TexturenIndex;
 
 public class JoinScreen extends InteractingDefaultScreen {
@@ -14,11 +14,13 @@ public class JoinScreen extends InteractingDefaultScreen {
 
     final float ABS_16 = Gdx.graphics.getHeight()/67.5f;
 
-    String ip = "0";
-    TextInputDialog listener;
+    String ip = "0", port = "0";
+    TextInputDialog ipListener, portListener;
 
     JoinScreen(TexturenIndex tx, final String name) {
         super(tx, name);
+
+        final TexturenIndex texturenIndex = tx;
 
         TextButton btn = new TextButton("Hauptmenü", defaultDarkTextButtonStyle);
         btn.setBounds(Gdx.graphics.getWidth()-122, Gdx.graphics.getHeight()-36, 114, 28);
@@ -29,10 +31,22 @@ public class JoinScreen extends InteractingDefaultScreen {
             }
         });
 
-        listener = new TextInputDialog();
-        Gdx.input.getTextInput(listener, "Zieladresse", "127.0.0.1", "");
+        TextButton startButton = new TextButton("Server betreten.", defaultLightTextButtonStyle);
+        startButton.setBounds(Gdx.graphics.getWidth()/2-64, Gdx.graphics.getHeight()/2, 128, 48);
+        startButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameClass(name, ip, port, texturenIndex));
+            }
+        });
+
+        portListener = new TextInputDialog();
+        Gdx.input.getTextInput(portListener, "Server Port", "1234", "");
+        ipListener = new TextInputDialog();
+        Gdx.input.getTextInput(ipListener, "Zieladresse", "127.0.0.1", "");
 
         defaultStage.addActor(btn);
+        defaultStage.addActor(startButton);
 
         // TODO: Verfügbarkeit eines Servers überprüfen.
     }
@@ -41,12 +55,13 @@ public class JoinScreen extends InteractingDefaultScreen {
     public void render(float delta) {
         super.render(delta);
 
-        ip = listener.getValue();
+        ip = ipListener.getValue();
+        port = portListener.getValue();
 
         defaultBatch.begin();
-        defaultFont.draw(defaultBatch, "Einem Server beitreten.", Gdx.graphics.getWidth() / 2 - 150, Gdx.graphics.getHeight() / 9 * 5);
-        if (ip.length() > 1) {
-            defaultBoldFont.draw(defaultBatch, "IP: " + ip, 32, Gdx.graphics.getHeight()-32);
+        //defaultFont.draw(defaultBatch, "Einem Server beitreten.", Gdx.graphics.getWidth() / 2 - 150, Gdx.graphics.getHeight() / 9 * 5);
+        if (ip.length() > 1 && port.length() > 1) {
+            defaultBoldFont.draw(defaultBatch, "IP: " + ip + " | Port: " + port, 32, Gdx.graphics.getHeight()-32);
         }
         defaultBatch.end();
     }
